@@ -4,10 +4,11 @@ from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
-# from dataclasses import dataclass
+from dataclasses import dataclass
+from src.components.data_transformation import DataTransformation, DataTransformationConfig
 
 
-# @dataclass
+@dataclass
 class DataIngestionConfig:
     train_data_path: str = os.path.join('artifacts', 'train.csv')
     test_data_path: str = os.path.join('artifacts', 'test.csv')
@@ -46,4 +47,6 @@ class DataIngestion:
 
 if __name__ == '__main__':
     ing = DataIngestion()
-    ing.start_data_ingestion()
+    train_data, test_data=ing.start_data_ingestion()
+    data_transformation=DataTransformation()
+    data_transformation.initiateTransformation(train_data, test_data)
